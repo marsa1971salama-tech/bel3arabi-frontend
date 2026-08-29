@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Linking } from 'react-native';
 
+const API_URL = 'https://bel3arabi-backend-production.up.railway.app';
+
 export default function App() {
   const [userRole, setUserRole] = useState(null); // يحدد ما إذا تم اختيار 'teacher' أو 'student' أو null (شاشة البداية)
   const [tab, setTab] = useState('معلومات');
