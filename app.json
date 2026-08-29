@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "بالعربي",
+    "slug": "bel3arabi",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#16302E"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.bel3arabi.app"
+    },
+    "android": {
+      "package": "com.bel3arabi.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#16302E"
+      }
+    }
+  }
+}
