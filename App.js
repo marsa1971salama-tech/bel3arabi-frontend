@@ -1,9 +1,5 @@
-  import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Linking } from 'react-native';
-
-                
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Linking } from 'react-native';
-free{ StyleSheet, Text, View, TouchableOpacity, ScrollView, Linking } from 'react-native';
 
 const API_URL = 'https://bel3arabi-backend-production.up.railway.app';
 
