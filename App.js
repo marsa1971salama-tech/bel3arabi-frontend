@@ -7,7 +7,7 @@ export default function App() {
   const [menuVisible, setMenuVisible] = useState(false);
   const [saveStatus, setSaveStatus] = useState(false);
 
-  // قائمة الساعات الكاملة من 00:00 إلى 24:00
+  // قائمة الساعات الواضحة من 00:00 إلى 24:00
   const hoursList = [
     '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', 
     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', 
@@ -15,14 +15,12 @@ export default function App() {
     '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'
   ];
 
-  // قائمة الأقسام الكاملة للمنصة التعليمية
   const menuList = [
     'الصفحة الرئيسية', 'رسائل', 'تلاميذ', 'الصف', 
     'التقويم', 'إعدادات التوفر', 'معلومات', 'إحالة صديق', 
     'الأكاديمية', 'ملفي الشخصي', 'إعدادات', 'مساعدة'
   ];
 
-  // حالة أيام الأسبوع مع المواعيد المتاحة لكل يوم وقائمة اختيار الساعات
   const [availability, setAvailability] = useState([
     { name: 'الإثنين', times: [{ from: '09:00', to: '17:00' }], showPicker: false, selectedFrom: '09:00', selectedTo: '17:00' },
     { name: 'الثلاثاء', times: [{ from: '09:00', to: '17:00' }], showPicker: false, selectedFrom: '09:00', selectedTo: '17:00' },
@@ -33,28 +31,24 @@ export default function App() {
     { name: 'الأحد', times: [{ from: '09:00', to: '17:00' }], showPicker: false, selectedFrom: '09:00', selectedTo: '17:00' },
   ]);
 
-  // دالة فتح وإغلاق قائمة الساعات لليوم المحدد
   const togglePicker = (dayIndex) => {
     const updated = [...availability];
     updated[dayIndex].showPicker = !updated[dayIndex].showPicker;
     setAvailability(updated);
   };
 
-  // دالة اختيار ساعة البدء
   const setFromHour = (dayIndex, hour) => {
     const updated = [...availability];
     updated[dayIndex].selectedFrom = hour;
     setAvailability(updated);
   };
 
-  // دالة اختيار ساعة النهاية
   const setToHour = (dayIndex, hour) => {
     const updated = [...availability];
     updated[dayIndex].selectedTo = hour;
     setAvailability(updated);
   };
 
-  // تأكيد إضافة موعد جديد
   const confirmAddSlot = (dayIndex) => {
     const updated = [...availability];
     const day = updated[dayIndex];
@@ -63,27 +57,24 @@ export default function App() {
     setAvailability(updated);
   };
 
-  // حفظ إعدادات التوفر
   const handleSaveAvailability = () => {
     setSaveStatus(true);
     setTimeout(() => setSaveStatus(false), 3000);
   };
 
-  // فتح تطبيق الواتساب
   const openWhatsApp = () => {
     Linking.openURL('whatsapp://send?phone=+201000000000').catch(() => {
       alert('تأكد من تثبيت تطبيق الواتساب على هاتفك');
     });
   };
 
-  // عرض محتوى الشاشة بناءً على القسم المختار
   const renderContent = () => {
     switch (tab) {
       case 'إعدادات التوفر':
         return (
           <View>
             <Text style={styles.title}>⏰ إعدادات التوفر والمنطقة الزمنية</Text>
-            <Text style={styles.subTextDesc}>اضغط على زر "+ إضافة موعد" لتفتح لك قائمة الساعات الكاملة لاختيار وقت البدء والنهاية.</Text>
+            <Text style={styles.subTextDesc}>اضغط على "+ إضافة موعد" لتظهر لك لوحة اختيار الساعات بوضوح تام.</Text>
             
             <View style={styles.rowBox}>
               <Text style={styles.boldText}>المنطقة الزمنية:</Text>
@@ -101,7 +92,7 @@ export default function App() {
                 <View style={styles.dayHeaderRow}>
                   <Text style={styles.dayTitle}>☑️ {day.name}</Text>
                   
-                  {/* زرار إضافة الموعد المفعل والصريح */}
+                  {/* زرار إضافة الموعد الواضح والصريح */}
                   <TouchableOpacity style={styles.addSlotBtn} onPress={() => togglePicker(dayIndex)}>
                     <Text style={styles.addSlotBtnText}>
                       {day.showPicker ? 'إغلاق القائمة ✕' : '+ إضافة موعد'}
@@ -109,7 +100,7 @@ export default function App() {
                   </TouchableOpacity>
                 </View>
 
-                {/* عرض المواعيد الحالية المحفوظة */}
+                {/* المواعيد الحالية */}
                 {day.times.map((timeSlot, tIndex) => (
                   <View key={tIndex} style={styles.timeSlotRow}>
                     <Text style={styles.timeLabel}>من: <Text style={styles.blueText}>{timeSlot.from}</Text></Text>
@@ -117,11 +108,11 @@ export default function App() {
                   </View>
                 ))}
 
-                {/* قائمة الساعات الكاملة التي تفتح عند الضغط على الزر */}
+                {/* لوحة الاختيار المباشرة والواضحة */}
                 {day.showPicker && (
                   <View style={styles.pickerBox}>
-                    <Text style={styles.pickerMainTitle}>اختر ساعة البدء:</Text>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.hoursScroll}>
+                    <Text style={styles.pickerMainTitle}>اختر ساعة البداية:</Text>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.hoursScroll}>
                       {hoursList.map((h, hIdx) => (
                         <TouchableOpacity 
                           key={hIdx} 
@@ -134,7 +125,7 @@ export default function App() {
                     </ScrollView>
 
                     <Text style={styles.pickerMainTitle}>اختر ساعة النهاية:</Text>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.hoursScroll}>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.hoursScroll}>
                       {hoursList.map((h, hIdx) => (
                         <TouchableOpacity 
                           key={hIdx} 
@@ -150,7 +141,7 @@ export default function App() {
                       style={styles.confirmAddBtn} 
                       onPress={() => confirmAddSlot(dayIndex)}
                     >
-                      <Text style={styles.confirmAddBtnText}>تأكيد إضافة الموعد (من {day.selectedFrom} إلى {day.selectedTo})</Text>
+                      <Text style={styles.confirmAddBtnText}>تأكيد وإضافة الموعد (من {day.selectedFrom} إلى {day.selectedTo})</Text>
                     </TouchableOpacity>
                   </View>
                 )}
@@ -221,7 +212,6 @@ export default function App() {
     }
   };
 
-  // شاشة اختيار نوع المستخدم (معلم / طالب) عند البداية
   if (userRole === null) {
     return (
       <View style={styles.welcomeContainer}>
@@ -240,7 +230,6 @@ export default function App() {
     );
   }
 
-  // شاشة الطالب
   if (userRole === 'student') {
     return (
       <View style={styles.container}>
@@ -263,7 +252,6 @@ export default function App() {
     );
   }
 
-  // الشاشة الرئيسية للمعلم بالكامل
   return (
     <View style={styles.container}>
       <View style={styles.teacherTopBar}>
@@ -343,20 +331,20 @@ const styles = StyleSheet.create({
   dayCard: { backgroundColor: '#fafafa', padding: 12, borderRadius: 8, borderWidth: 1, borderColor: '#e5e7eb', marginBottom: 12 },
   dayHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
   dayTitle: { fontSize: 15, fontWeight: 'bold', color: '#222' },
-  addSlotBtn: { backgroundColor: '#10B981', paddingVertical: 6, paddingHorizontal: 10, borderRadius: 6 },
-  addSlotBtnText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
+  addSlotBtn: { backgroundColor: '#10B981', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 6 },
+  addSlotBtnText: { color: '#fff', fontSize: 13, fontWeight: 'bold' },
   timeSlotRow: { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#fff', padding: 8, borderRadius: 6, borderWidth: 1, borderColor: '#eee', marginBottom: 6 },
   timeLabel: { fontSize: 13, color: '#444' },
 
-  pickerBox: { backgroundColor: '#f0fdf4', padding: 12, borderRadius: 8, marginTop: 8, borderWidth: 1, borderColor: '#bbf7d0' },
-  pickerMainTitle: { fontSize: 12, fontWeight: 'bold', color: '#166534', marginBottom: 6, marginTop: 4 },
-  hoursScroll: { marginBottom: 8 },
-  hourChip: { backgroundColor: '#fff', paddingVertical: 6, paddingHorizontal: 10, borderRadius: 6, borderWidth: 1, borderColor: '#cbd5e1', marginRight: 5 },
+  pickerBox: { backgroundColor: '#f0fdf4', padding: 15, borderRadius: 8, marginTop: 10, borderWidth: 2, borderColor: '#10B981' },
+  pickerMainTitle: { fontSize: 14, fontWeight: 'bold', color: '#166534', marginBottom: 8, marginTop: 6 },
+  hoursScroll: { marginBottom: 10, paddingVertical: 4 },
+  hourChip: { backgroundColor: '#fff', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 6, borderWidth: 1, borderColor: '#cbd5e1', marginRight: 6 },
   selectedHourChip: { backgroundColor: '#007AFF', borderColor: '#007AFF' },
-  hourChipText: { fontSize: 12, color: '#333', fontWeight: 'bold' },
+  hourChipText: { fontSize: 13, color: '#333', fontWeight: 'bold' },
   selectedHourText: { color: '#fff' },
-  confirmAddBtn: { backgroundColor: '#10B981', padding: 10, borderRadius: 6, alignItems: 'center', marginTop: 8 },
-  confirmAddBtnText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
+  confirmAddBtn: { backgroundColor: '#10B981', padding: 12, borderRadius: 6, alignItems: 'center', marginTop: 10 },
+  confirmAddBtnText: { color: '#fff', fontSize: 13, fontWeight: 'bold' },
   
   successBox: { backgroundColor: '#d1e7dd', padding: 10, borderRadius: 6, marginBottom: 12, borderWidth: 1, borderColor: '#badbcc' },
   successText: { color: '#0f5132', fontSize: 13, fontWeight: 'bold', textAlign: 'center' },
