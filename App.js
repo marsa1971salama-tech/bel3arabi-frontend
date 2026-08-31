@@ -7,7 +7,7 @@ export default function App() {
   const [menuVisible, setMenuVisible] = useState(false);
   const [saveStatus, setSaveStatus] = useState(false);
 
-  // تحديد ساعات الـ 24 ساعة المتاحة للاختيار
+  // قائمة الساعات الكاملة من 00:00 إلى 24:00
   const hoursList = [
     '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', 
     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', 
@@ -15,56 +15,75 @@ export default function App() {
     '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'
   ];
 
+  // قائمة الأقسام الكاملة للمنصة التعليمية
   const menuList = [
     'الصفحة الرئيسية', 'رسائل', 'تلاميذ', 'الصف', 
     'التقويم', 'إعدادات التوفر', 'معلومات', 'إحالة صديق', 
-    'الأكاديمية', 'ملفي الشخصي', 'إعدادات', 'المجتمع', 
-    'البحث عن مدرسين', 'مساعدة'
+    'الأكاديمية', 'ملفي الشخصي', 'إعدادات', 'مساعدة'
   ];
 
+  // حالة أيام الأسبوع مع المواعيد المتاحة لكل يوم وقائمة اختيار الساعات
   const [availability, setAvailability] = useState([
-    { name: 'الإثنين', times: [{ from: '00:00', to: '03:00' }, { from: '06:00', to: '24:00' }], showPicker: false },
-    { name: 'الثلاثاء', times: [{ from: '00:00', to: '03:00' }, { from: '06:00', to: '24:00' }], showPicker: false },
-    { name: 'الأربعاء', times: [{ from: '00:00', to: '03:00' }, { from: '06:00', to: '24:00' }], showPicker: false },
-    { name: 'الخميس', times: [{ from: '00:00', to: '03:00' }, { from: '06:00', to: '24:00' }], showPicker: false },
-    { name: 'الجمعة', times: [{ from: '00:00', to: '03:00' }, { from: '06:00', to: '24:00' }], showPicker: false },
-    { name: 'السبت', times: [{ from: '00:00', to: '03:00' }, { from: '06:00', to: '24:00' }], showPicker: false },
-    { name: 'الأحد', times: [{ from: '00:00', to: '03:00' }, { from: '06:00', to: '24:00' }], showPicker: false },
+    { name: 'الإثنين', times: [{ from: '09:00', to: '17:00' }], showPicker: false, selectedFrom: '09:00', selectedTo: '17:00' },
+    { name: 'الثلاثاء', times: [{ from: '09:00', to: '17:00' }], showPicker: false, selectedFrom: '09:00', selectedTo: '17:00' },
+    { name: 'الأربعاء', times: [{ from: '09:00', to: '17:00' }], showPicker: false, selectedFrom: '09:00', selectedTo: '17:00' },
+    { name: 'الخميس', times: [{ from: '09:00', to: '17:00' }], showPicker: false, selectedFrom: '09:00', selectedTo: '17:00' },
+    { name: 'الجمعة', times: [{ from: '09:00', to: '17:00' }], showPicker: false, selectedFrom: '09:00', selectedTo: '17:00' },
+    { name: 'السبت', times: [{ from: '09:00', to: '17:00' }], showPicker: false, selectedFrom: '09:00', selectedTo: '17:00' },
+    { name: 'الأحد', times: [{ from: '09:00', to: '17:00' }], showPicker: false, selectedFrom: '09:00', selectedTo: '17:00' },
   ]);
 
-  // فتح/غلق قائمة اختيار الساعات للـ 24 ساعة
+  // دالة فتح وإغلاق قائمة الساعات لليوم المحدد
   const togglePicker = (dayIndex) => {
     const updated = [...availability];
     updated[dayIndex].showPicker = !updated[dayIndex].showPicker;
     setAvailability(updated);
   };
 
-  // إضافة موعد جديد بالساعات المختارة
-  const addNewSlotToDay = (dayIndex, fromHour, toHour) => {
+  // دالة اختيار ساعة البدء
+  const setFromHour = (dayIndex, hour) => {
     const updated = [...availability];
-    updated[dayIndex].times.push({ from: fromHour, to: toHour });
-    updated[dayIndex].showPicker = false; // قفل القائمة بعد الاختيار
+    updated[dayIndex].selectedFrom = hour;
     setAvailability(updated);
   };
 
+  // دالة اختيار ساعة النهاية
+  const setToHour = (dayIndex, hour) => {
+    const updated = [...availability];
+    updated[dayIndex].selectedTo = hour;
+    setAvailability(updated);
+  };
+
+  // تأكيد إضافة موعد جديد
+  const confirmAddSlot = (dayIndex) => {
+    const updated = [...availability];
+    const day = updated[dayIndex];
+    day.times.push({ from: day.selectedFrom, to: day.selectedTo });
+    day.showPicker = false;
+    setAvailability(updated);
+  };
+
+  // حفظ إعدادات التوفر
   const handleSaveAvailability = () => {
     setSaveStatus(true);
     setTimeout(() => setSaveStatus(false), 3000);
   };
 
+  // فتح تطبيق الواتساب
   const openWhatsApp = () => {
     Linking.openURL('whatsapp://send?phone=+201000000000').catch(() => {
       alert('تأكد من تثبيت تطبيق الواتساب على هاتفك');
     });
   };
 
+  // عرض محتوى الشاشة بناءً على القسم المختار
   const renderContent = () => {
     switch (tab) {
       case 'إعدادات التوفر':
         return (
           <View>
             <Text style={styles.title}>⏰ إعدادات التوفر والمنطقة الزمنية</Text>
-            <Text style={styles.subTextDesc}>اضغط على "إضافة موعد" لاختيار ساعات الـ 24 ساعة المتاحة للطلاب.</Text>
+            <Text style={styles.subTextDesc}>اضغط على زر "+ إضافة موعد" لتفتح لك قائمة الساعات الكاملة لاختيار وقت البدء والنهاية.</Text>
             
             <View style={styles.rowBox}>
               <Text style={styles.boldText}>المنطقة الزمنية:</Text>
@@ -81,6 +100,8 @@ export default function App() {
               <View key={dayIndex} style={styles.dayCard}>
                 <View style={styles.dayHeaderRow}>
                   <Text style={styles.dayTitle}>☑️ {day.name}</Text>
+                  
+                  {/* زرار إضافة الموعد المفعل والصريح */}
                   <TouchableOpacity style={styles.addSlotBtn} onPress={() => togglePicker(dayIndex)}>
                     <Text style={styles.addSlotBtnText}>
                       {day.showPicker ? 'إغلاق القائمة ✕' : '+ إضافة موعد'}
@@ -88,7 +109,7 @@ export default function App() {
                   </TouchableOpacity>
                 </View>
 
-                {/* عرض مواعيد اليوم الحالية */}
+                {/* عرض المواعيد الحالية المحفوظة */}
                 {day.times.map((timeSlot, tIndex) => (
                   <View key={tIndex} style={styles.timeSlotRow}>
                     <Text style={styles.timeLabel}>من: <Text style={styles.blueText}>{timeSlot.from}</Text></Text>
@@ -96,25 +117,41 @@ export default function App() {
                   </View>
                 ))}
 
-                {/* نافذة اختيار ساعات الـ 24 ساعة عند الضغط على إضافة موعد */}
+                {/* قائمة الساعات الكاملة التي تفتح عند الضغط على الزر */}
                 {day.showPicker && (
                   <View style={styles.pickerBox}>
-                    <Text style={styles.pickerTitle}>اختر ساعة البداية والنهاية من الـ 24 ساعة:</Text>
-                    <Text style={styles.pickerSubText}>مثال سريع لإضافة موعد (من 09:00 إلى 17:00):</Text>
-                    <View style={styles.quickAddRow}>
-                      <TouchableOpacity 
-                        style={styles.quickBtn} 
-                        onPress={() => addNewSlotToDay(dayIndex, '09:00', '17:00')}
-                      >
-                        <Text style={styles.quickBtnText}>إضافة (09:00 - 17:00)</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity 
-                        style={styles.quickBtnNight} 
-                        onPress={() => addNewSlotToDay(dayIndex, '18:00', '23:00')}
-                      >
-                        <Text style={styles.quickBtnText}>إضافة (18:00 - 23:00)</Text>
-                      </TouchableOpacity>
-                    </View>
+                    <Text style={styles.pickerMainTitle}>اختر ساعة البدء:</Text>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.hoursScroll}>
+                      {hoursList.map((h, hIdx) => (
+                        <TouchableOpacity 
+                          key={hIdx} 
+                          style={[styles.hourChip, day.selectedFrom === h && styles.selectedHourChip]}
+                          onPress={() => setFromHour(dayIndex, h)}
+                        >
+                          <Text style={[styles.hourChipText, day.selectedFrom === h && styles.selectedHourText]}>{h}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </ScrollView>
+
+                    <Text style={styles.pickerMainTitle}>اختر ساعة النهاية:</Text>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.hoursScroll}>
+                      {hoursList.map((h, hIdx) => (
+                        <TouchableOpacity 
+                          key={hIdx} 
+                          style={[styles.hourChip, day.selectedTo === h && styles.selectedHourChip]}
+                          onPress={() => setToHour(dayIndex, h)}
+                        >
+                          <Text style={[styles.hourChipText, day.selectedTo === h && styles.selectedHourText]}>{h}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </ScrollView>
+
+                    <TouchableOpacity 
+                      style={styles.confirmAddBtn} 
+                      onPress={() => confirmAddSlot(dayIndex)}
+                    >
+                      <Text style={styles.confirmAddBtnText}>تأكيد إضافة الموعد (من {day.selectedFrom} إلى {day.selectedTo})</Text>
+                    </TouchableOpacity>
                   </View>
                 )}
               </View>
@@ -130,10 +167,10 @@ export default function App() {
         return (
           <View>
             <Text style={styles.title}>📊 نظرة عامة - إحصائيات النشاط</Text>
-            <Text style={styles.subTextDesc}>لمحة حول نشاطك والأداء العام.</Text>
+            <Text style={styles.subTextDesc}>لمحة شاملة حول نشاطك والأداء والتقييمات العامة.</Text>
             <View style={styles.badgeBox}>
               <Text style={styles.badgeMainTitle}>مدرس ممتاز (9/9)</Text>
-              <Text style={styles.badgeText}>أنت الآن مدرس ممتاز! ستصل إلى المزيد من الطلاب مع زيادة ظهورك.</Text>
+              <Text style={styles.badgeText}>أنتِ الآن مدرس ممتاز! ستصلين إلى المزيد من الطلاب مع زيادة ظهورك.</Text>
             </View>
           </View>
         );
@@ -142,10 +179,10 @@ export default function App() {
         return (
           <View>
             <Text style={styles.title}>👥 قائمة التلاميذ</Text>
-            <Text style={styles.subTextDesc}>إدارة الطلاب والاشتراكات والدروس.</Text>
+            <Text style={styles.subTextDesc}>إدارة الطلاب والاشتراكات ومواعيد الحصص القادمة.</Text>
             <View style={styles.studentCard}>
               <Text style={styles.studentName}>مارینا (Marina)</Text>
-              <Text style={styles.subText}>الدرس التالي: موعد الحصة القادمة</Text>
+              <Text style={styles.subText}>الدرس التالي: اللغة العربية ومتابعة المنهج</Text>
             </View>
           </View>
         );
@@ -162,7 +199,7 @@ export default function App() {
         return (
           <View>
             <Text style={styles.title}>💬 الرسائل والمحادثات</Text>
-            <Text style={styles.subTextDesc}>تواصلك المباشر مع الطلاب وأولياء الأمور.</Text>
+            <Text style={styles.subTextDesc}>تواصلك المباشر مع الطلاب وأولياء الأمور لاستفسارات الدروس.</Text>
           </View>
         );
 
@@ -170,7 +207,7 @@ export default function App() {
         return (
           <View>
             <Text style={styles.title}>📅 التقويم وجدول الحصص</Text>
-            <Text style={styles.subTextDesc}>متابعة المواعيد المحجوزة والجدول الأسبوعي.</Text>
+            <Text style={styles.subTextDesc}>متابعة المواعيد المحجوزة والجدول الأسبوعي بدقة.</Text>
           </View>
         );
 
@@ -178,12 +215,13 @@ export default function App() {
         return (
           <View>
             <Text style={styles.title}>قسم: {tab}</Text>
-            <Text style={styles.subTextDesc}>هذا القسم يعمل بكفاءة وجاهز تماماً.</Text>
+            <Text style={styles.subTextDesc}>هذا القسم جاهز ويعمل بكفاءة تامة.</Text>
           </View>
         );
     }
   };
 
+  // شاشة اختيار نوع المستخدم (معلم / طالب) عند البداية
   if (userRole === null) {
     return (
       <View style={styles.welcomeContainer}>
@@ -202,6 +240,7 @@ export default function App() {
     );
   }
 
+  // شاشة الطالب
   if (userRole === 'student') {
     return (
       <View style={styles.container}>
@@ -224,11 +263,12 @@ export default function App() {
     );
   }
 
+  // الشاشة الرئيسية للمعلم بالكامل
   return (
     <View style={styles.container}>
       <View style={styles.teacherTopBar}>
         <TouchableOpacity style={styles.headerButton} onPress={() => setMenuVisible(!menuVisible)}>
-          <Text style={styles.headerButtonText}>☰ القائمة (اختر القسم: {tab})</Text>
+          <Text style={styles.headerButtonText}>☰ القائمة (القسم الحالي: {tab})</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setUserRole(null)} style={styles.switchRoleBtn}>
           <Text style={styles.switchRoleText}>خروج</Text>
@@ -287,13 +327,14 @@ const styles = StyleSheet.create({
   backButton: { backgroundColor: '#6b7280', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 6 },
   backButtonText: { color: '#fff', fontSize: 12 },
 
-  menuDrawer: { backgroundColor: '#fff', marginHorizontal: 12, maxHeight: 280, borderWidth: 1, borderColor: '#ccc', borderRadius: 8, marginBottom: 10, padding: 5 },
+  menuDrawer: { backgroundColor: '#fff', marginHorizontal: 12, maxHeight: 300, borderWidth: 1, borderColor: '#ccc', borderRadius: 8, marginBottom: 10, padding: 5 },
   shareBtn: { backgroundColor: '#f8f9fa', padding: 10, borderRadius: 6, borderWidth: 1, borderColor: '#ccc', alignItems: 'center', marginBottom: 5 },
   shareBtnText: { fontSize: 13, fontWeight: 'bold', color: '#333' },
   menuItem: { padding: 12, borderBottomWidth: 1, borderColor: '#f1f1f1' },
   activeMenuBg: { backgroundColor: '#eef2ff', borderRadius: 6 },
   menuItemText: { fontSize: 14, color: '#444' },
   activeText: { color: '#007AFF', fontWeight: 'bold' },
+
   contentArea: { padding: 12 },
   card: { padding: 15, backgroundColor: '#fff', borderRadius: 10, borderWidth: 1, borderColor: '#ddd', marginBottom: 15 },
   title: { fontSize: 18, fontWeight: 'bold', marginBottom: 8, color: '#222' },
@@ -307,13 +348,15 @@ const styles = StyleSheet.create({
   timeSlotRow: { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#fff', padding: 8, borderRadius: 6, borderWidth: 1, borderColor: '#eee', marginBottom: 6 },
   timeLabel: { fontSize: 13, color: '#444' },
 
-  pickerBox: { backgroundColor: '#f0fdf4', padding: 10, borderRadius: 6, marginTop: 8, borderWidth: 1, borderColor: '#bbf7d0' },
-  pickerTitle: { fontSize: 12, fontWeight: 'bold', color: '#166534', marginBottom: 4 },
-  pickerSubText: { fontSize: 11, color: '#15803d', marginBottom: 8 },
-  quickAddRow: { flexDirection: 'row', gap: 6, justifyContent: 'space-between' },
-  quickBtn: { flex: 1, backgroundColor: '#007AFF', padding: 8, borderRadius: 5, alignItems: 'center' },
-  quickBtnNight: { flex: 1, backgroundColor: '#7c3aed', padding: 8, borderRadius: 5, alignItems: 'center' },
-  quickBtnText: { color: '#fff', fontSize: 11, fontWeight: 'bold' },
+  pickerBox: { backgroundColor: '#f0fdf4', padding: 12, borderRadius: 8, marginTop: 8, borderWidth: 1, borderColor: '#bbf7d0' },
+  pickerMainTitle: { fontSize: 12, fontWeight: 'bold', color: '#166534', marginBottom: 6, marginTop: 4 },
+  hoursScroll: { marginBottom: 8 },
+  hourChip: { backgroundColor: '#fff', paddingVertical: 6, paddingHorizontal: 10, borderRadius: 6, borderWidth: 1, borderColor: '#cbd5e1', marginRight: 5 },
+  selectedHourChip: { backgroundColor: '#007AFF', borderColor: '#007AFF' },
+  hourChipText: { fontSize: 12, color: '#333', fontWeight: 'bold' },
+  selectedHourText: { color: '#fff' },
+  confirmAddBtn: { backgroundColor: '#10B981', padding: 10, borderRadius: 6, alignItems: 'center', marginTop: 8 },
+  confirmAddBtnText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
   
   successBox: { backgroundColor: '#d1e7dd', padding: 10, borderRadius: 6, marginBottom: 12, borderWidth: 1, borderColor: '#badbcc' },
   successText: { color: '#0f5132', fontSize: 13, fontWeight: 'bold', textAlign: 'center' },
