@@ -7,7 +7,6 @@ export default function App() {
   const [userRole, setUserRole] = useState(null);
   const [tab, setTab] = useState('إعدادات التوفر');
   const [menuVisible, setMenuVisible] = useState(false);
-  const [showMenuOptions, setShowMenuOptions] = useState(false);
   const [saveStatus, setSaveStatus] = useState(false);
 
   const menuList = [
@@ -18,13 +17,13 @@ export default function App() {
   ];
 
   const daysList = [
-    { id: 'monday', name: 'الإثنين', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
-    { id: 'tuesday', name: 'الثلاثاء', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
-    { id: 'wednesday', name: 'الأربعاء', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
-    { id: 'thursday', name: 'الخميس', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
-    { id: 'friday', name: 'الجمعة', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
-    { id: 'saturday', name: 'السبت', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
-    { id: 'sunday', name: 'الأحد', times: ['00:00 إلى 02:00', '11:30 إلى 24:00'] },
+    { name: 'الإثنين', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
+    { name: 'الثلاثاء', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
+    { name: 'الأربعاء', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
+    { name: 'الخميس', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
+    { name: 'الجمعة', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
+    { name: 'السبت', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
+    { name: 'الأحد', times: ['00:00 إلى 03:00', '06:00 إلى 24:00'] },
   ];
 
   const openWhatsApp = () => {
@@ -70,9 +69,6 @@ export default function App() {
                     <Text style={styles.timeLabel}>إلى: <Text style={styles.blueText}>{timeSlot.split(' إلى ')[1]}</Text></Text>
                   </View>
                 ))}
-                <TouchableOpacity style={styles.addSlotBtn}>
-                  <Text style={styles.addSlotText}>+ إضافة موعد</Text>
-                </TouchableOpacity>
               </View>
             ))}
 
@@ -101,7 +97,7 @@ export default function App() {
             <Text style={styles.subTextDesc}>إدارة الطلاب والاشتراكات والدروس.</Text>
             <View style={styles.studentCard}>
               <Text style={styles.studentName}>مارینا (Marina)</Text>
-              <Text style={styles.subText}>الدرس التالي: 13 أغسطس</Text>
+              <Text style={styles.subText}>الدرس التالي: موعد الحصة القادمة</Text>
             </View>
           </View>
         );
@@ -236,8 +232,6 @@ const styles = StyleSheet.create({
   dayTitle: { fontSize: 15, fontWeight: 'bold', color: '#222' },
   timeSlotRow: { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#fff', padding: 8, borderRadius: 6, borderWidth: 1, borderColor: '#eee', marginBottom: 6 },
   timeLabel: { fontSize: 13, color: '#444' },
-  addSlotBtn: { marginTop: 4 },
-  addSlotText: { fontSize: 12, color: '#007AFF', fontWeight: 'bold' },
   
   successBox: { backgroundColor: '#d1e7dd', padding: 10, borderRadius: 6, marginBottom: 12, borderWidth: 1, borderColor: '#badbcc' },
   successText: { color: '#0f5132', fontSize: 13, fontWeight: 'bold', textAlign: 'center' },
