@@ -5,7 +5,7 @@ const API_URL = 'https://bel3arabi-backend-production.up.railway.app';
 
 export default function App() {
   const [userRole, setUserRole] = useState(null); // يحدد ما إذا تم اختيار 'teacher' أو 'student' أو null (شاشة البداية)
-  const [tab, setTab] = useState('معلومات');
+  const [tab, setTab] = useState('إعدادات التوفر');
   const [menuVisible, setMenuVisible] = useState(false);
   const [showMenuOptions, setShowMenuOptions] = useState(false);
 
@@ -27,6 +27,29 @@ export default function App() {
 
   const renderContent = () => {
     switch (tab) {
+      case 'إعدادات التوفر':
+        return (
+          <View>
+            <Text style={styles.title}>⏰ إعدادات التوفر والمنطقة الزمنية</Text>
+            <Text style={styles.subTextDesc}>قم بتحديث أوقات فراغك والمنطقة الزمنية لتسهيل حجز الدروس من قبل الطلاب.</Text>
+            
+            <View style={styles.rowBox}>
+              <Text style={styles.boldText}>المنطقة الزمنية:</Text>
+              <Text style={styles.blueText}>(GMT+2) - القاهرة، مصر</Text>
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.boldText}>مدة إشعار الدرس التجريبي:</Text>
+              <View style={styles.selectBox}><Text style={styles.blueText}>إشعار بمدة 12 ساعة على الأقل</Text></View>
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.boldText}>مدة إشعار الدروس الاعتيادية:</Text>
+              <View style={styles.selectBox}><Text style={styles.blueText}>إشعار بمدة 6 ساعات على الأقل</Text></View>
+            </View>
+          </View>
+        );
+
       case 'معلومات':
         return (
           <View>
@@ -160,17 +183,6 @@ export default function App() {
             <View style={styles.inputGroup}>
               <Text style={styles.boldText}>مدة إشعار الدروس الاعتيادية:</Text>
               <View style={styles.selectBox}><Text style={styles.blueText}>إشعار بمدة 6 ساعات على الأقل</Text></View>
-            </View>
-          </View>
-        );
-
-      case 'إعدادات التوفر':
-        return (
-          <View>
-            <Text style={styles.title}>⏰ إعدادات التوفر والمنطقة الزمنية</Text>
-            <View style={styles.rowBox}>
-              <Text style={styles.boldText}>المنطقة الزمنية:</Text>
-              <Text style={styles.blueText}>(GMT+3) - القاهرة، مصر</Text>
             </View>
           </View>
         );
