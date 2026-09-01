@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Linking } from 'r
 
 export default function App() {
   const [userRole, setUserRole] = useState(null);
-  const [tab, setTab] = useState('إعدادات التوفر');
+  const [tab, setTab] = useState('الصفحة الرئيسية');
   const [menuVisible, setMenuVisible] = useState(false);
   const [saveStatus, setSaveStatus] = useState(false);
 
@@ -69,6 +69,74 @@ export default function App() {
 
   const renderContent = () => {
     switch (tab) {
+      case 'الصفحة الرئيسية':
+        return (
+          <View>
+            <View style={styles.headerContainer}>
+              <Text style={styles.mainHeader}>🏠 الصفحة الرئيسية لوحة التحكم</Text>
+              <Text style={styles.subTextDesc}>إدارة إعدادات ملفك الشخصي، المساعدة، والخيارات الأساسية.</Text>
+            </View>
+
+            {/* قسم ملفك */}
+            <Text style={styles.sectionTitle}>📁 ملفك</Text>
+            
+            <TouchableOpacity style={styles.menuRowItem}>
+              <Text style={styles.menuRowText}>👁️ مدى ظهور ملفك</Text>
+              <Text style={styles.rowRightBadge}>مفعل ‹</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuRowItem}>
+              <Text style={styles.menuRowText}>💳 الرصيد</Text>
+              <Text style={styles.rowRightBadge}>USD ‹</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuRowItem}>
+              <Text style={styles.menuRowText}>💲 سعر درس مدته ...</Text>
+              <Text style={styles.rowRightBadge}>USD ‹</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuRowItem}>
+              <Text style={styles.menuRowText}>🎁 ادعُ واربح $25</Text>
+              <Text style={styles.rowRightBadge}>‹</Text>
+            </TouchableOpacity>
+
+            {/* قسم مساعدة */}
+            <Text style={styles.sectionTitle}>🛠️ مساعدة</Text>
+            
+            <TouchableOpacity style={styles.menuRowItem}>
+              <Text style={styles.menuRowText}>ℹ️ مركز الدعم</Text>
+              <Text style={styles.rowRightBadge}>‹</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuRowItem}>
+              <Text style={styles.menuRowText}>📄 المركز القانوني</Text>
+              <Text style={styles.rowRightBadge}>‹</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuRowItem}>
+              <Text style={styles.menuRowText}>👥 مجتمع المدرسين</Text>
+              <Text style={styles.rowRightBadge}>‹</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuRowItem} onPress={() => setTab('الأكاديمية')}>
+              <Text style={styles.menuRowText}>🎓 الأكاديمية</Text>
+              <Text style={styles.rowRightBadge}>‹</Text>
+            </TouchableOpacity>
+
+            {/* قسم إعدادات */}
+            <Text style={styles.sectionTitle}>⚙️ إعدادات</Text>
+            
+            <TouchableOpacity style={styles.menuRowItem}>
+              <Text style={styles.menuRowText}>🌐 لغة التطبيق</Text>
+              <Text style={styles.rowRightBadge}>العربية ‹</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.dangerRowItem}>
+              <Text style={styles.dangerRowText}>🗑️ حذف الحساب</Text>
+            </TouchableOpacity>
+          </View>
+        );
+
       case 'إعدادات التوفر':
         return (
           <View>
@@ -276,14 +344,6 @@ export default function App() {
           </View>
         );
 
-      case 'الصفحة الرئيسية':
-        return (
-          <View>
-            <Text style={styles.title}>🏠 الصفحة الرئيسية للمنصة</Text>
-            <Text style={styles.subTextDesc}>مرحباً بكِ مجدداً يا مرسى في لوحة التحكم الخاصة بك.</Text>
-          </View>
-        );
-
       case 'رسائل':
         return (
           <View>
@@ -428,6 +488,14 @@ const styles = StyleSheet.create({
   mainHeader: { fontSize: 18, fontWeight: 'bold', marginBottom: 4, color: '#111' },
   sectionTitle: { fontSize: 16, fontWeight: 'bold', marginTop: 20, marginBottom: 8, color: '#111' },
   subTextDesc: { fontSize: 12, color: '#666', marginBottom: 12 },
+  
+  menuRowItem: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', padding: 14, borderRadius: 8, borderWidth: 1, borderColor: '#e5e7eb', marginBottom: 8 },
+  menuRowText: { fontSize: 14, fontWeight: 'bold', color: '#333' },
+  rowRightBadge: { fontSize: 14, fontWeight: 'bold', color: '#666' },
+
+  dangerRowItem: { backgroundColor: '#fef2f2', padding: 14, borderRadius: 8, borderWidth: 1, borderColor: '#fecaca', marginBottom: 8, alignItems: 'center' },
+  dangerRowText: { fontSize: 14, fontWeight: 'bold', color: '#ef4444' },
+
   dateFilterBox: { backgroundColor: '#eef2ff', padding: 8, borderRadius: 6, alignSelf: 'flex-start', marginBottom: 12 },
   dateFilterText: { fontSize: 12, fontWeight: 'bold', color: '#1e40af' },
   infoCardItem: { backgroundColor: '#ffffff', padding: 14, borderRadius: 8, borderWidth: 1, borderColor: '#e5e7eb', marginBottom: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 2, elevation: 1 },
