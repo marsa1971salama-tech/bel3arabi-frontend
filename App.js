@@ -153,27 +153,22 @@ export default function App() {
       case 'معلومات':
         return (
           <View>
-            {/* العنوان الرئيسي */}
             <View style={styles.headerContainer}>
               <Text style={styles.mainHeader}>📊 نظرة عامة - إحصائيات النشاط</Text>
-              <Text style={styles.subTextDesc}>لمحة شاملة حول نشاطك، الأداء، والتقييمات العامة المتحدثة مباشرة من المنصة.</Text>
+              <Text style={styles.subTextDesc}>لمحة شاملة حول نشاطك والأداء والتقييمات العامة.</Text>
             </View>
             
-            {/* فلتر الوقت */}
             <View style={styles.dateFilterBox}>
               <Text style={styles.dateFilterText}>📅 آخر 90 يوم ▼</Text>
             </View>
 
-            {/* قسم المكاسب */}
             <View style={styles.infoCardItem}>
               <Text style={styles.infoCardTitle}>مكاسب (آخر 90 يوم)</Text>
               <Text style={styles.infoCardValue}>--</Text>
               <Text style={styles.subText}>تتحدث تلقائياً حسب نشاطك والفترة الزمنية.</Text>
             </View>
 
-            {/* قسم أسرار النجاح الرئيسي */}
             <Text style={styles.sectionTitle}>⭐ أسرار النجاح</Text>
-            <Text style={styles.subTextDesc}>إحصائيات أداءك لمساعدة على جذب الطلاب وتطوير العمل.</Text>
 
             <View style={styles.infoCardItem}>
               <Text style={styles.infoCardTitle}>دروس أعدت جدولتها</Text>
@@ -240,7 +235,6 @@ export default function App() {
               <Text style={styles.infoCardValue}>--</Text>
             </View>
 
-            {/* قسم اشتراكات جديدة والنشاط الثلاثي */}
             <Text style={styles.sectionTitle}>📈 اشتراكات جديدة</Text>
             <View style={styles.tripleStatsRow}>
               <View style={styles.tripleStatItem}>
@@ -257,13 +251,11 @@ export default function App() {
               </View>
             </View>
 
-            {/* قسم شارة مدرس ممتاز */}
             <View style={styles.badgeBox}>
               <Text style={styles.badgeMainTitle}>مدرس ممتاز (9/9)</Text>
               <Text style={styles.badgeText}>تهانينا بصفتك مدرسًا ممتازًا، ستصل إلى المزيد من الطلاب مع زيادة ظهورك في نتائج البحث.</Text>
             </View>
 
-            {/* مسيرتك في التعليم */}
             <View style={styles.infoCardItem}>
               <Text style={styles.infoCardTitle}>💪 مسيرتك في التعليم</Text>
               <Text style={styles.infoCardValue}>--</Text>
