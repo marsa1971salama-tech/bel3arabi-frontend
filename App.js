@@ -159,9 +159,38 @@ export default function App() {
           <View>
             <Text style={styles.title}>📊 نظرة عامة - إحصائيات النشاط</Text>
             <Text style={styles.subTextDesc}>لمحة شاملة حول نشاطك والأداء والتقييمات العامة.</Text>
+            
+            {/* بطاقة مدرس ممتاز */}
             <View style={styles.badgeBox}>
               <Text style={styles.badgeMainTitle}>مدرس ممتاز (9/9)</Text>
-              <Text style={styles.badgeText}>أنتِ الآن مدرس ممتاز! ستصلين إلى المزيد من الطلاب مع زيادة ظهورك.</Text>
+              <Text style={styles.badgeText}>تهانينا بصفتك مدرسًا ممتازًا، ستصل إلى المزيد من الطلاب مع زيادة ظهورك في نتائج البحث.</Text>
+            </View>
+
+            {/* بطاقة المكاسب */}
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>مكاسب (آخر 90 يوم)</Text>
+              <Text style={styles.infoCardValue}>$761</Text>
+              <Text style={styles.subText}>بيانات من 3 يونيو - 1 سبتمبر، مقارنة مع 4 مارس - 2 يونيو.</Text>
+            </View>
+
+            {/* بطاقة ساعات التعليم */}
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>💪 مسيرتك في التعليم</Text>
+              <Text style={styles.infoCardValue}>2,640.5</Text>
+              <Text style={styles.subText}>ساعة تعليم منذ بداية المسيرة في يونيو 2023.</Text>
+            </View>
+
+            {/* بطاقة معدل التقييمات */}
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>⭐ معدل التقييمات</Text>
+              <Text style={styles.infoCardValue}>5.0</Text>
+              <Text style={styles.subText}>اطمح إلى أكثر من 4.8</Text>
+            </View>
+
+            {/* بطاقة السعر للدرس */}
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>💵 السعر للدرس</Text>
+              <Text style={styles.infoCardValue}>$28</Text>
             </View>
           </View>
         );
@@ -355,9 +384,13 @@ const styles = StyleSheet.create({
   boldText: { fontWeight: 'bold', color: '#333', fontSize: 13 },
   blueText: { color: '#007AFF', fontWeight: 'bold', fontSize: 13 },
   
-  badgeBox: { backgroundColor: '#f0fdf4', padding: 15, borderRadius: 8, borderWidth: 1, borderColor: '#bbf7d0' },
+  badgeBox: { backgroundColor: '#f0fdf4', padding: 15, borderRadius: 8, borderWidth: 1, borderColor: '#bbf7d0', marginBottom: 12 },
   badgeMainTitle: { fontSize: 16, fontWeight: 'bold', color: '#166534', marginBottom: 6 },
   badgeText: { fontSize: 13, color: '#15803d' },
+
+  infoCardItem: { backgroundColor: '#fafafa', padding: 12, borderRadius: 8, borderWidth: 1, borderColor: '#e5e7eb', marginBottom: 12 },
+  infoCardTitle: { fontSize: 14, fontWeight: 'bold', color: '#333', marginBottom: 4 },
+  infoCardValue: { fontSize: 20, fontWeight: 'bold', color: '#007AFF', marginBottom: 4 },
 
   studentCard: { backgroundColor: '#fafafa', padding: 12, borderRadius: 8, borderWidth: 1, borderColor: '#e5e7eb' },
   studentName: { fontSize: 15, fontWeight: 'bold', color: '#333', marginBottom: 4 },
