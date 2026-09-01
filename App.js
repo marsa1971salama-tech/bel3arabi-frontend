@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Linking } from 'react-native';
-import InfoScreen from './InfoScreen';
 
 export default function App() {
   const [userRole, setUserRole] = useState(null);
@@ -8,7 +7,6 @@ export default function App() {
   const [menuVisible, setMenuVisible] = useState(false);
   const [saveStatus, setSaveStatus] = useState(false);
 
-  // قائمة الساعات الواضحة من 00:00 إلى 24:00
   const hoursList = [
     '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', 
     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', 
@@ -93,7 +91,6 @@ export default function App() {
                 <View style={styles.dayHeaderRow}>
                   <Text style={styles.dayTitle}>☑️ {day.name}</Text>
                   
-                  {/* زرار إضافة الموعد الواضح والصريح */}
                   <TouchableOpacity style={styles.addSlotBtn} onPress={() => togglePicker(dayIndex)}>
                     <Text style={styles.addSlotBtnText}>
                       {day.showPicker ? 'إغلاق القائمة ✕' : '+ إضافة موعد'}
@@ -101,7 +98,6 @@ export default function App() {
                   </TouchableOpacity>
                 </View>
 
-                {/* المواعيد الحالية */}
                 {day.times.map((timeSlot, tIndex) => (
                   <View key={tIndex} style={styles.timeSlotRow}>
                     <Text style={styles.timeLabel}>من: <Text style={styles.blueText}>{timeSlot.from}</Text></Text>
@@ -109,7 +105,6 @@ export default function App() {
                   </View>
                 ))}
 
-                {/* لوحة الاختيار المباشرة والواضحة */}
                 {day.showPicker && (
                   <View style={styles.pickerBox}>
                     <Text style={styles.pickerMainTitle}>اختر ساعة البداية:</Text>
@@ -156,7 +151,126 @@ export default function App() {
         );
 
       case 'معلومات':
-        return <InfoScreen />;
+        return (
+          <View>
+            {/* العنوان الرئيسي */}
+            <View style={styles.headerContainer}>
+              <Text style={styles.mainHeader}>📊 نظرة عامة - إحصائيات النشاط</Text>
+              <Text style={styles.subTextDesc}>لمحة شاملة حول نشاطك، الأداء، والتقييمات العامة المتحدثة مباشرة من المنصة.</Text>
+            </View>
+            
+            {/* فلتر الوقت */}
+            <View style={styles.dateFilterBox}>
+              <Text style={styles.dateFilterText}>📅 آخر 90 يوم ▼</Text>
+            </View>
+
+            {/* قسم المكاسب */}
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>مكاسب (آخر 90 يوم)</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+              <Text style={styles.subText}>تتحدث تلقائياً حسب نشاطك والفترة الزمنية.</Text>
+            </View>
+
+            {/* قسم أسرار النجاح الرئيسي */}
+            <Text style={styles.sectionTitle}>⭐ أسرار النجاح</Text>
+            <Text style={styles.subTextDesc}>إحصائيات أداءك لمساعدة على جذب الطلاب وتطوير العمل.</Text>
+
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>دروس أعدت جدولتها</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+              <Text style={styles.subText}>اطمح إلى أقل من 10%</Text>
+            </View>
+
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>دروس ألغيتها</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+              <Text style={styles.subText}>اطمح إلى أقل من 5%</Text>
+            </View>
+
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>إجمالي الدروس التي تغيبت عنها</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+              <Text style={styles.subText}>اطمح إلى 0</Text>
+            </View>
+
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>الدروس الأسبوعية</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+              <Text style={styles.subText}>اطمح إلى أكثر من 75%</Text>
+            </View>
+
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>الدروس فى صف Preply</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+              <Text style={styles.subText}>اطمح إلى أكثر من 75%</Text>
+            </View>
+
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>إجابات خلال 24 ساعة</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+              <Text style={styles.subText}>اطمح إلى أكثر من 90%</Text>
+            </View>
+
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>المراسلة بعد الدرس التجريبي</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+              <Text style={styles.subText}>اطمح إلى أكثر من 90%</Text>
+            </View>
+
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>المواعيد الأكثر طلبًا</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+              <Text style={styles.subText}>اطمح إلى أكثر من 80 موعداً</Text>
+            </View>
+
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>معدل التقييمات</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+              <Text style={styles.subText}>اطمح إلى أكثر من 4.8</Text>
+            </View>
+
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>نتيجه الملف الشخصي</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+              <Text style={styles.subText}>اطمح إلى أكثر من 90%</Text>
+            </View>
+
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>السعر للدرس</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+            </View>
+
+            {/* قسم اشتراكات جديدة والنشاط الثلاثي */}
+            <Text style={styles.sectionTitle}>📈 اشتراكات جديدة</Text>
+            <View style={styles.tripleStatsRow}>
+              <View style={styles.tripleStatItem}>
+                <Text style={styles.tripleLabel}>اشتراكات جديدة</Text>
+                <Text style={styles.tripleVal}>--</Text>
+              </View>
+              <View style={styles.tripleStatItem}>
+                <Text style={styles.tripleLabel}>دروس تجريبية</Text>
+                <Text style={styles.tripleVal}>--</Text>
+              </View>
+              <View style={styles.tripleStatItem}>
+                <Text style={styles.tripleLabel}>مشاهدة ملفك</Text>
+                <Text style={styles.tripleVal}>--</Text>
+              </View>
+            </View>
+
+            {/* قسم شارة مدرس ممتاز */}
+            <View style={styles.badgeBox}>
+              <Text style={styles.badgeMainTitle}>مدرس ممتاز (9/9)</Text>
+              <Text style={styles.badgeText}>تهانينا بصفتك مدرسًا ممتازًا، ستصل إلى المزيد من الطلاب مع زيادة ظهورك في نتائج البحث.</Text>
+            </View>
+
+            {/* مسيرتك في التعليم */}
+            <View style={styles.infoCardItem}>
+              <Text style={styles.infoCardTitle}>💪 مسيرتك في التعليم</Text>
+              <Text style={styles.infoCardValue}>--</Text>
+              <Text style={styles.subText}>ساعة تعليم تتحدث تلقائياً مع تقدمك على المنصة.</Text>
+            </View>
+          </View>
+        );
 
       case 'تلاميذ':
         return (
@@ -307,4 +421,66 @@ const styles = StyleSheet.create({
   backButton: { backgroundColor: '#6b7280', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 6 },
   backButtonText: { color: '#fff', fontSize: 12 },
 
-...
+  menuDrawer: { backgroundColor: '#fff', marginHorizontal: 12, maxHeight: 300, borderWidth: 1, borderColor: '#ccc', borderRadius: 8, marginBottom: 10, padding: 5 },
+  shareBtn: { backgroundColor: '#f8f9fa', padding: 10, borderRadius: 6, borderWidth: 1, borderColor: '#ccc', alignItems: 'center', marginBottom: 5 },
+  shareBtnText: { fontSize: 13, fontWeight: 'bold', color: '#333' },
+  menuItem: { padding: 12, borderBottomWidth: 1, borderColor: '#f1f1f1' },
+  activeMenuBg: { backgroundColor: '#eef2ff', borderRadius: 6 },
+  menuItemText: { fontSize: 14, color: '#444' },
+  activeText: { color: '#007AFF', fontWeight: 'bold' },
+
+  contentArea: { padding: 12 },
+  card: { padding: 15, backgroundColor: '#fff', borderRadius: 10, borderWidth: 1, borderColor: '#ddd', marginBottom: 15 },
+  
+  headerContainer: { marginBottom: 10 },
+  mainHeader: { fontSize: 18, fontWeight: 'bold', marginBottom: 4, color: '#111' },
+  sectionTitle: { fontSize: 16, fontWeight: 'bold', marginTop: 20, marginBottom: 8, color: '#111' },
+  subTextDesc: { fontSize: 12, color: '#666', marginBottom: 12 },
+  dateFilterBox: { backgroundColor: '#eef2ff', padding: 8, borderRadius: 6, alignSelf: 'flex-start', marginBottom: 12 },
+  dateFilterText: { fontSize: 12, fontWeight: 'bold', color: '#1e40af' },
+  infoCardItem: { backgroundColor: '#ffffff', padding: 14, borderRadius: 8, borderWidth: 1, borderColor: '#e5e7eb', marginBottom: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 2, elevation: 1 },
+  infoCardTitle: { fontSize: 13, fontWeight: 'bold', color: '#333', marginBottom: 4 },
+  infoCardValue: { fontSize: 18, fontWeight: 'bold', color: '#007AFF', marginBottom: 4 },
+  subText: { fontSize: 11, color: '#666' },
+  tripleStatsRow: { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#ffffff', borderWidth: 1, borderColor: '#e5e7eb', borderRadius: 8, padding: 12, marginBottom: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 2, elevation: 1 },
+  tripleStatItem: { flex: 1, alignItems: 'center' },
+  tripleLabel: { fontSize: 11, color: '#666', textAlign: 'center', marginBottom: 4 },
+  tripleVal: { fontSize: 15, fontWeight: 'bold', color: '#007AFF' },
+  badgeBox: { backgroundColor: '#f0fdf4', padding: 14, borderRadius: 8, borderWidth: 1, borderColor: '#bbf7d0', marginBottom: 12 },
+  badgeMainTitle: { fontSize: 15, fontWeight: 'bold', color: '#166534', marginBottom: 6 },
+  badgeText: { fontSize: 12, color: '#15803d', lineHeight: 18 },
+
+  title: { fontSize: 18, fontWeight: 'bold', marginBottom: 8, color: '#222' },
+  dayCard: { backgroundColor: '#fafafa', padding: 12, borderRadius: 8, borderWidth: 1, borderColor: '#e5e7eb', marginBottom: 12 },
+  dayHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
+  dayTitle: { fontSize: 15, fontWeight: 'bold', color: '#222' },
+  addSlotBtn: { backgroundColor: '#10B981', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 6 },
+  addSlotBtnText: { color: '#fff', fontSize: 13, fontWeight: 'bold' },
+  timeSlotRow: { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#fff', padding: 8, borderRadius: 6, borderWidth: 1, borderColor: '#eee', marginBottom: 6 },
+  timeLabel: { fontSize: 13, color: '#444' },
+
+  pickerBox: { backgroundColor: '#f0fdf4', padding: 15, borderRadius: 8, marginTop: 10, borderWidth: 2, borderColor: '#10B981' },
+  pickerMainTitle: { fontSize: 14, fontWeight: 'bold', color: '#166534', marginBottom: 8, marginTop: 6 },
+  hoursScroll: { marginBottom: 10, paddingVertical: 4 },
+  hourChip: { backgroundColor: '#fff', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 6, borderWidth: 1, borderColor: '#cbd5e1', marginRight: 6 },
+  selectedHourChip: { backgroundColor: '#007AFF', borderColor: '#007AFF' },
+  hourChipText: { fontSize: 13, color: '#333', fontWeight: 'bold' },
+  selectedHourText: { color: '#fff' },
+  confirmAddBtn: { backgroundColor: '#10B981', padding: 12, borderRadius: 6, alignItems: 'center', marginTop: 10 },
+  confirmAddBtnText: { color: '#fff', fontSize: 13, fontWeight: 'bold' },
+  
+  successBox: { backgroundColor: '#d1e7dd', padding: 10, borderRadius: 6, marginBottom: 12, borderWidth: 1, borderColor: '#badbcc' },
+  successText: { color: '#0f5132', fontSize: 13, fontWeight: 'bold', textAlign: 'center' },
+  saveButton: { backgroundColor: '#007AFF', paddingVertical: 14, borderRadius: 10, alignItems: 'center', marginTop: 10, marginBottom: 10 },
+  saveButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+
+  rowBox: { flexDirection: 'row', justifyContent: 'space-between', padding: 10, backgroundColor: '#fafafa', borderRadius: 6, marginBottom: 12, borderWidth: 1, borderColor: '#eee' },
+  boldText: { fontWeight: 'bold', color: '#333', fontSize: 13 },
+  blueText: { color: '#007AFF', fontWeight: 'bold', fontSize: 13 },
+
+  studentCard: { backgroundColor: '#fafafa', padding: 12, borderRadius: 8, borderWidth: 1, borderColor: '#e5e7eb' },
+  studentName: { fontSize: 15, fontWeight: 'bold', color: '#333', marginBottom: 4 },
+
+  whatsappButton: { backgroundColor: '#25D366', paddingVertical: 14, borderRadius: 10, alignItems: 'center', marginBottom: 20 },
+  whatsappButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' }
+});
